@@ -1,7 +1,8 @@
 // import the user model
 const User = require('../models/user');
 const bcrypt = require('bcrypt');
-const { SALT_ROUNDS } = require('../utils/config');
+const { SALT_ROUNDS, JWT_SECRET, ENV } = require('../utils/config');
+const jwt = require('jsonwebtoken');
 
 // setup authController as object of functions
 const authController = {
@@ -41,7 +42,38 @@ const authController = {
     // login
     login: async (request, response) => {
         try {
-            return response.status(200).json({ message: "login route" });
+            // get email and password from request body
+            const { email, password } = request.body;
+
+            // check if user with the email exists in the database
+            const user = await User.findOne({ email });
+
+            // if not, return a 400 response with message "Invalid email or user does not exist"
+            if (!user) {
+                return response.status(400).json({ message: "Invalid email or user does not exist" });
+            }
+
+            // if yes, compare the password with the hashed password in the database using bcrypt
+            const passwordMatch = await bcrypt.compare(password, user.password);
+
+            // if not match, return a 400 response with message "Invalid password"
+            if (!passwordMatch) {
+                return response.status(400).json({ message: "Invalid password" });
+            }
+
+            // generate a JWT token for the user
+            const token = await jwt.sign({ userId: user._id}, JWT_SECRET, { expiresIn: '1h' });
+
+            // set the cookie with the token
+            response.cookie('token', token, {
+                httpOnly: true,
+                secure: ENV === 'production', // set secure flag only in production
+                sameSite: ENV === 'production' ? 'none' : 'lax', // set sameSite flag based on environment
+                maxAge: 3600000 // set cookie expiration time to 1 hour
+            });
+
+            // return a success response with the token
+            return response.status(200).json({ message: "User logged in successfully" });
         } catch (e) {
             return response.status(500).json({ message: e.message });
         }
