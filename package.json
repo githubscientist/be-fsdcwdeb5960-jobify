@@ -1,0 +1,34 @@
+{
+  "name": "be-fsdcwdeb5960-jobify",
+  "version": "1.0.0",
+  "description": "This is a Job Portal Application that is built using React for the frontend and Node.js with Express for the backend. The application allows users to browse job listings, apply for jobs, and manage their profiles.",
+  "keywords": [
+    "nodejs",
+    "expressjs",
+    "mongodb",
+    "dotenv",
+    "jsonwebtoken",
+    "mongoose",
+    "restfulapi"
+  ],
+  "homepage": "https://github.com/githubscientist/be-fsdcwdeb5960-jobify#readme",
+  "bugs": {
+    "url": "https://github.com/githubscientist/be-fsdcwdeb5960-jobify/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/githubscientist/be-fsdcwdeb5960-jobify.git"
+  },
+  "license": "ISC",
+  "author": "Sathish Gnanaprakasam",
+  "type": "commonjs",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "mongoose": "^9.8.0"
+  }
+}
