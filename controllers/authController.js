@@ -81,7 +81,14 @@ const authController = {
     // get the profile of the logged in user
     me: async (request, response) => {
         try {
-            return response.status(200).json({ message: "me route" });
+            // get the user id from the request object
+            const userId = request.userId;
+
+            // find the user in the database using the user id (make sure to exclude the password field from the response)
+            const user = await User.findById(userId).select('-password -__v');
+
+            // send the user object as a response
+            return response.status(200).json(user);
         } catch (e) {
             return response.status(500).json({ message: e.message });
         }
@@ -89,7 +96,15 @@ const authController = {
     // logout
     logout: async (request, response) => {
         try {
-            return response.status(200).json({ message: "logout route" });
+            // clear the cookie with the token
+            response.clearCookie('token', {
+                httpOnly: true,
+                secure: ENV === 'production', // set secure flag only in production
+                sameSite: ENV === 'production' ? 'none' : 'lax' // set sameSite flag based on environment
+            });
+
+            // return a success response
+            return response.status(200).json({ message: "User logged out successfully" });
         } catch (e) {
             return response.status(500).json({ message: e.message });
         }
