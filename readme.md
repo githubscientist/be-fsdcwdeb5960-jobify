@@ -27,3 +27,17 @@ Admin Features:
 - Manage Companies (Create, Update, View, Delete)
 - Manage Recruiters (Create, Update, View, Delete)
 - Assign Recruiters to Companies
+
+Sample Company:
+
+```json
+{
+    "name": "Tech Solutions Inc.",
+    "description": "A leading technology solutions provider specializing in software development and IT consulting.",
+    "industry": "Information Technology",
+    "location": "San Francisco, CA",
+    "website": "https://www.techsolutions.com",
+    "size": "201-500",
+    "foundedYear": 2010
+}
+```
