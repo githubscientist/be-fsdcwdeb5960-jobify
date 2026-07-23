@@ -41,3 +41,51 @@ Sample Company:
     "foundedYear": 2010
 }
 ```
+
+```json
+{
+    "name": "Innovatech Ltd.",
+    "description": "A cutting-edge technology company focused on innovative solutions in AI and machine learning.",
+    "industry": "Artificial Intelligence",
+    "location": "New York, NY",
+    "website": "https://www.innovatech.com",
+    "size": "51-200",
+    "foundedYear": 2015
+}
+```
+
+```json
+{
+    "name": "Green Energy Corp.",
+    "description": "A renewable energy company dedicated to providing sustainable energy solutions.",
+    "industry": "Renewable Energy",
+    "location": "Austin, TX",
+    "website": "https://www.greenenergy.com",
+    "size": "501-1000",
+    "foundedYear": 2008
+}
+```
+
+```json
+{
+    "name": "HealthTech Solutions",
+    "description": "A healthcare technology company focused on developing innovative medical devices and software.",
+    "industry": "Healthcare Technology",
+    "location": "Boston, MA",
+    "website": "https://www.healthtechsolutions.com",
+    "size": "201-500",
+    "foundedYear": 2012
+}
+```
+
+```json
+{
+    "name": "FinTech Innovations",
+    "description": "A financial technology company providing cutting-edge solutions for digital banking and payments.",
+    "industry": "Financial Technology",
+    "location": "Chicago, IL",
+    "website": "https://www.fintechinnovations.com",
+    "size": "201-500",
+    "foundedYear": 2014
+}
+```
