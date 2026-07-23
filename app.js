@@ -4,6 +4,7 @@ const authRouter = require('./routes/authRouter');
 const cookieParser = require('cookie-parser');
 const companyRouter = require('./routes/companyRouter');
 const jobRouter = require('./routes/jobRouter');
+const applicationRouter = require('./routes/applicationRouter');
 
 // create express app
 const app = express();
@@ -18,6 +19,7 @@ app.use(express.json());
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/companies', companyRouter);
 app.use('/api/v1/jobs', jobRouter);
+app.use('/api/v1/applications', applicationRouter);
 
 // export the app
 module.exports = app;
