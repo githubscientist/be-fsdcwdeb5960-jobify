@@ -50,6 +50,11 @@ const userSchema = new mongoose.Schema({
     isVerified: {
         type: Boolean,
         default: false
+    },
+    assignedCompany: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Company',
+        default: null
     }
 }, {
     timestamps: true
