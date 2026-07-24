@@ -3,6 +3,7 @@ const User = require('../models/user');
 const bcrypt = require('bcrypt');
 const { SALT_ROUNDS, JWT_SECRET, ENV } = require('../utils/config');
 const jwt = require('jsonwebtoken');
+const { sendEmail } = require('../utils/email');
 
 // setup authController as object of functions
 const authController = {
@@ -32,6 +33,9 @@ const authController = {
 
             // save the user object to the database
             await newUser.save();
+
+            // send a welcome email to the user (optional)
+            await sendEmail(email, "Welcome to Job Portal", `Hi ${name},\n\nThank you for registering on our job portal. We are excited to have you on board!\n\nBest regards,\nJob Portal Team`);
 
             // return a success response
             return response.status(201).json({ message: "User registered successfully" });
@@ -107,6 +111,32 @@ const authController = {
             return response.status(200).json({ message: "User logged out successfully" });
         } catch (e) {
             return response.status(500).json({ message: e.message });
+        }
+    },
+    uploadProfilePicture: async (req, res) => {
+        try {
+            if (!req.file) {
+                return res.status(400).json({ message: 'No file uploaded' });
+            }
+    
+            const user = await User.findByIdAndUpdate(req.userId, { profilePicture: req.file.path }, { new: true }).select('-password');
+    
+            res.status(200).json({ success: true, message: 'Profile picture uploaded successfully', user });
+        } catch (error) {
+            res.status(500).json({ success: false, message: 'Error uploading profile picture', error: error.message });
+        }
+    },
+    uploadResume: async (req, res) => {
+        try {
+            if (!req.file) {
+                return res.status(400).json({ message: 'No file uploaded' });
+            }
+
+            const user = await User.findByIdAndUpdate(req.userId, { resume: req.file.path }, { new: true }).select('-password');
+
+            res.status(200).json({ success: true, message: 'Resume uploaded successfully', user });
+        } catch (error) {
+            res.status(500).json({ success: false, message: 'Error uploading resume', error: error.message });
         }
     }
 }
