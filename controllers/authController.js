@@ -3,6 +3,7 @@ const User = require('../models/user');
 const bcrypt = require('bcrypt');
 const { SALT_ROUNDS, JWT_SECRET, ENV } = require('../utils/config');
 const jwt = require('jsonwebtoken');
+const { sendEmail } = require('../utils/email');
 
 // setup authController as object of functions
 const authController = {
@@ -32,6 +33,9 @@ const authController = {
 
             // save the user object to the database
             await newUser.save();
+
+            // send a welcome email to the user (optional)
+            await sendEmail(email, "Welcome to Job Portal", `Hi ${name},\n\nThank you for registering on our job portal. We are excited to have you on board!\n\nBest regards,\nJob Portal Team`);
 
             // return a success response
             return response.status(201).json({ message: "User registered successfully" });
