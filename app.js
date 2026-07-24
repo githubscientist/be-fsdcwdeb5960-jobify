@@ -9,6 +9,9 @@ const applicationRouter = require('./routes/applicationRouter');
 // create express app
 const app = express();
 
+// enable static files for uploads
+app.use('/uploads', express.static('uploads'));
+
 // parse cookies
 app.use(cookieParser());
 

@@ -112,6 +112,32 @@ const authController = {
         } catch (e) {
             return response.status(500).json({ message: e.message });
         }
+    },
+    uploadProfilePicture: async (req, res) => {
+        try {
+            if (!req.file) {
+                return res.status(400).json({ message: 'No file uploaded' });
+            }
+    
+            const user = await User.findByIdAndUpdate(req.userId, { profilePicture: req.file.path }, { new: true }).select('-password');
+    
+            res.status(200).json({ success: true, message: 'Profile picture uploaded successfully', user });
+        } catch (error) {
+            res.status(500).json({ success: false, message: 'Error uploading profile picture', error: error.message });
+        }
+    },
+    uploadResume: async (req, res) => {
+        try {
+            if (!req.file) {
+                return res.status(400).json({ message: 'No file uploaded' });
+            }
+
+            const user = await User.findByIdAndUpdate(req.userId, { resume: req.file.path }, { new: true }).select('-password');
+
+            res.status(200).json({ success: true, message: 'Resume uploaded successfully', user });
+        } catch (error) {
+            res.status(500).json({ success: false, message: 'Error uploading resume', error: error.message });
+        }
     }
 }
 
