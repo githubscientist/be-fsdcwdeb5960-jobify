@@ -77,7 +77,16 @@ const authController = {
             });
 
             // return a success response with the token
-            return response.status(200).json({ message: "User logged in successfully" });
+            return response.status(200).json({
+                message: "User logged in successfully",
+                user: {
+                    id: user._id,
+                    name: user.name,
+                    email: user.email,
+                    role: user.role,
+                    assignedCompany: user.assignedCompany || null
+                }
+            });
         } catch (e) {
             return response.status(500).json({ message: e.message });
         }
@@ -92,7 +101,7 @@ const authController = {
             const user = await User.findById(userId).select('-password -__v');
 
             // send the user object as a response
-            return response.status(200).json(user);
+            return response.status(200).json({user});
         } catch (e) {
             return response.status(500).json({ message: e.message });
         }

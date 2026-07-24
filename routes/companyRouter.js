@@ -13,7 +13,7 @@ companyRouter.get('/', getAllCompanies);
 companyRouter.get('/:id', getCompanyByID);
 companyRouter.put('/:id', updateCompany);
 companyRouter.delete('/:id', deleteCompany);
+companyRouter.get("/recruiters", getAllRecruiters);
 companyRouter.post("/:id/recruiters", createRecruiter);
-companyRouter.get("/:id/recruiters", getAllRecruiters);
 
 module.exports = companyRouter;

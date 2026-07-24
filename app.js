@@ -5,12 +5,19 @@ const cookieParser = require('cookie-parser');
 const companyRouter = require('./routes/companyRouter');
 const jobRouter = require('./routes/jobRouter');
 const applicationRouter = require('./routes/applicationRouter');
+const cors = require('cors');
 
 // create express app
 const app = express();
 
 // enable static files for uploads
 app.use('/uploads', express.static('uploads'));
+
+// enable CORS
+app.use(cors({
+  origin: 'https://fe-fsdcwdeb5960-jobify.netlify.app', // replace with your frontend URL
+  credentials: true, // allow cookies to be sent
+}));
 
 // parse cookies
 app.use(cookieParser());
