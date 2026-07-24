@@ -49,7 +49,7 @@ const adminController = {
             const companies = await Company.find().populate('createdBy', 'name email');
 
             // return a 200 status code with a message "Companies retrieved successfully" and the result
-            return response.status(200).json({ message: "Companies retrieved successfully", result: companies });
+            return response.status(200).json({ companies });
         } catch (e) {
             return response.status(500).json({ message: e.message });
         }
@@ -176,26 +176,14 @@ const adminController = {
         }
     },
     // to get all recruiters
-    getAllRecruiters: async (request, response) => {
+    getAllRecruiters: async (req, res) => {
         try {
-            // get the company id from the request params
-            const { id } = request.params;
+            // get all the recruiters along with their assigned company details
+            const recruiters = await User.find({ role: 'recruiter' }).populate('assignedCompany', 'name');
 
-            // check if the company exists with the companyId provided in the request params
-            const company = await Company.findById(id);
-
-            // if no, return a 404 status code with a message "Company not found"
-            if (!company) {
-                return response.status(404).json({ message: "Company not found" });
-            }
-
-            // get all the recruiters from the database using the companyId and store the result in a variable
-            const recruiters = await User.find({ assignedCompany: id, role: 'recruiter' }).select('-password -__v');
-
-            // return a 200 status code with a message "Recruiters retrieved successfully" and the result
-            return response.status(200).json({ message: "Recruiters retrieved successfully", result: recruiters });
-        } catch (e) {
-            return response.status(500).json({ message: e.message });
+            res.status(200).json({ recruiters });
+        } catch (error) {
+            res.status(500).json({ message: 'Failed to retrieve recruiters', error: error.message });
         }
     }
 }
